@@ -36,6 +36,71 @@ interface NotebookCell {
 export default function Portfolio() {
   const [executedCells, setExecutedCells] = useState<Set<string>>(new Set())
   const [isDark, setIsDark] = useState(false)
+  const [isfrench, setIsFrench] = useState(false)
+
+  // Language content
+  const content = {
+    en: {
+      availability: "Available for new opportunities",
+      title: "ML Engineer & AI Specialist",
+      experience: "1 Year Experience",
+      education: "Master's in AI, Université Côte d'Azur, Nice France",
+      aboutTitle: "About Me",
+      aboutText: "AI and Data Science Engineer with a solid background in Applied Artificial Intelligence and Computer Engineering. Passionate about building intelligent, data-driven systems with real-world impact. Experienced in developing machine learning pipelines, NLP solutions, and full-stack applications. Strong expertise in AI model development, data engineering, and problem-solving, with a hands-on approach to delivering innovative, production-ready solutions.",
+      skillsTitle: "Technical Expertise",
+      certificatesTitle: "Certificates & Achievements",
+      notebookTitle: "Interactive Data Profile",
+      notebookSubtitle: "Explore my professional information through an interactive Jupyter-style notebook",
+      runAllCells: "Run All Cells",
+      projectsTitle: "Featured Projects",
+      contactTitle: "Let's Build Something Amazing",
+      contactSubtitle: "Ready to discuss your next ML project or explore collaboration opportunities?",
+      getInTouch: "Get In Touch",
+      programming: "Programming",
+      aiFrameworks: "AI & Frameworks",
+      dataEngineering: "Data Engineering",
+      infrastructure: "Infrastructure",
+      viewDetails: "View Details",
+    },
+    fr: {
+      availability: "Disponible pour de nouvelles opportunités",
+      title: "Ingénieur ML & Spécialiste IA",
+      experience: "1 An d'Expérience",
+      education: "Master en IA, Université Côte d'Azur, Nice France",
+      aboutTitle: "À Propos",
+      aboutText: "Ingénieur en IA et Science des Données avec une solide formation en Intelligence Artificielle Appliquée et Ingénierie Informatique. Passionné par la création de systèmes intelligents basés sur les données avec un impact réel. Expérimenté dans le développement de pipelines d'apprentissage automatique, de solutions NLP et d'applications full-stack. Expertise solide en développement de modèles IA, ingénierie des données et résolution de problèmes, avec une approche pratique pour livrer des solutions innovantes prêtes pour la production.",
+      skillsTitle: "Expertise Technique",
+      certificatesTitle: "Certificats & Réalisations",
+      notebookTitle: "Profil de Données Interactif",
+      notebookSubtitle: "Explorez mes informations professionnelles via un notebook interactif de style Jupyter",
+      runAllCells: "Exécuter Toutes les Cellules",
+      projectsTitle: "Projets Phares",
+      contactTitle: "Construisons Quelque Chose d'Extraordinaire",
+      contactSubtitle: "Prêt à discuter de votre prochain projet ML ou explorer des opportunités de collaboration ?",
+      getInTouch: "Contactez-Moi",
+      programming: "Programmation",
+      aiFrameworks: "IA & Frameworks",
+      dataEngineering: "Ingénierie des Données",
+      infrastructure: "Infrastructure",
+      viewDetails: "Voir les Détails",
+    }
+  }
+
+  const t = isfrench ? content.fr : content.en
+
+  // Structured skills organization
+  const devTools = {
+    languages: ["Python", "Java", "SQL", "JavaScript", "C", "C++"],
+    frameworks: ["TensorFlow", "PyTorch", "Scikit-learn", "React"],
+    infrastructure: ["AWS", "Docker", "Kubernetes", "Apache Spark"],
+    databases: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"],
+  }
+
+  const aiSkills = {
+    machineLearning: ["Deep Learning", "NLP", "Computer Vision", "MLOps"],
+    dataEngineering: ["Pandas", "NumPy", "Apache Airflow", "Kafka"],
+    tools: ["Jupyter", "MLflow", "Weights & Biases", "Tableau"],
+  }
 
   const personalData = {
     basic_info: [
@@ -70,7 +135,7 @@ export default function Portfolio() {
       {
         name: "Multimodal Search Engine",
         impact: "Enhanced search relevance by 40%",
-        tech_stack: "Deep Learning, PyTorch, AudioCLIP",
+        tech_stack: "Deep Learning, PyTorch, AudioCLIP, NextJS",
         year: 2025,
       },
     ],
@@ -184,7 +249,7 @@ feature_importance`,
 projects_df = pd.DataFrame({
     'project': ['Economic News Intelligence And Sentiment Analysis', 'Stock Portfolio Analysis using Deep Learning', 'Multimodal Search Engine'],
     'impact': ['Real-time market insights with 92% accuracy', 'Optimized portfolio performance by 25%', 'Enhanced search relevance by 40%'],
-    'tech_stack': ['NLP, LLM, Dash, Plotly, Python', 'Deep Learning, PyTorch, Financial APIs', 'Deep Learning, PyTorch, AudioCLIP'],
+    'tech_stack': ['NLP, LLM, Dash, Plotly, Python', 'Deep Learning, PyTorch, Financial APIs', 'Deep Learning, PyTorch, AudioCLIP, NextJS'],
     'year': [2025, 2025, 2025],
     'impact_value': [92, 25, 40]  # Numeric values for visualization
 })
@@ -493,8 +558,20 @@ projects_df[['project', 'impact', 'year']]`,
         ></div>
       </div>
 
-      {/* Theme Toggle */}
-      <div className="fixed top-6 right-6 z-50">
+      {/* Theme and Language Toggle */}
+      <div className="fixed top-6 right-6 z-50 flex gap-2">
+        <Button
+          onClick={() => setIsFrench(!isfrench)}
+          variant="outline"
+          size="sm"
+          className={`${
+            isDark
+              ? "bg-slate-800/80 border-slate-600 text-white hover:bg-slate-700"
+              : "bg-white/80 border-blue-200 text-gray-700 hover:bg-blue-50"
+          } backdrop-blur-xl transition-all duration-300`}
+        >
+          {isfrench ? "EN" : "FR"}
+        </Button>
         <Button
           onClick={() => setIsDark(!isDark)}
           variant="outline"
@@ -522,7 +599,7 @@ projects_df[['project', 'impact', 'year']]`,
                 }`}
               >
                 <Star className="w-4 h-4 mr-2" />
-                <span className="text-sm font-medium">Available for new opportunities</span>
+                <span className="text-sm font-medium">{t.availability}</span>
               </div>
 
               <div>
@@ -532,18 +609,18 @@ projects_df[['project', 'impact', 'year']]`,
                   Fnine Jasser
                 </h1>
                 <p className={`text-xl md:text-2xl mb-6 ${themeClasses.textSecondary} transition-colors duration-300`}>
-                  ML Engineer & AI Specialist
+                  {t.title}
                 </p>
               </div>
 
               <div className={`flex items-center gap-6 ${themeClasses.textSecondary} transition-colors duration-300`}>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
-                  <span>1 Year Experience</span>
+                  <span>{t.experience}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Award className="w-5 h-5" />
-                  <span>Master's in AI, Université Côte d'Azur, Nice France</span>
+                  <span>{t.education}</span>
                 </div>
               </div>
 
@@ -629,16 +706,12 @@ projects_df[['project', 'impact', 'year']]`,
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           <h2 className={`text-4xl font-bold text-center mb-8 ${themeClasses.text} transition-colors duration-300`}>
-            About Me
+            {t.aboutTitle}
           </h2>
           <Card className={`${themeClasses.card} transition-all duration-300 hover:shadow-2xl hover:-translate-y-1`}>
             <CardContent className="p-8">
               <p className={`${themeClasses.textSecondary} text-lg leading-relaxed transition-colors duration-300`}>
-                AI and Data Science Engineer with a solid background in Applied Artificial Intelligence and Computer 
-                Engineering. Passionate about building intelligent, data-driven systems with real-world impact. Experienced
-                in developing machine learning pipelines, NLP solutions, and full-stack applications. Strong expertise in AI
-                model development, data engineering, and problem-solving, with a hands-on approach to delivering
-                innovative, production-ready solutions.
+                {t.aboutText}
               </p>
             </CardContent>
           </Card>
@@ -649,11 +722,40 @@ projects_df[['project', 'impact', 'year']]`,
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <h2 className={`text-4xl font-bold text-center mb-12 ${themeClasses.text} transition-colors duration-300`}>
-            Technical Expertise
+            {t.skillsTitle}
           </h2>
           <div className="grid md:grid-cols-4 gap-8">
-            {" "}
-            {/* Changed to 4 columns */}
+            {/* Programming Languages Card */}
+            <Card
+              className={`${themeClasses.card} transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group`}
+            >
+              <CardHeader>
+                <CardTitle className={`${themeClasses.text} flex items-center transition-colors duration-300`}>
+                  <div className="p-2 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 mr-3 group-hover:scale-110 transition-transform duration-300">
+                    <Code className="w-6 h-6 text-white" />
+                  </div>
+                  {t.programming}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {devTools.languages.map((lang) => (
+                    <Badge
+                      key={lang}
+                      className={`transition-all duration-300 ${
+                        isDark
+                          ? "bg-green-500/20 text-green-300 border-green-500/30 hover:bg-green-500/30"
+                          : "bg-green-100 text-green-700 border-green-300 hover:bg-green-200"
+                      }`}
+                    >
+                      {lang}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* AI & ML Frameworks Card */}
             <Card
               className={`${themeClasses.card} transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group`}
             >
@@ -662,12 +764,12 @@ projects_df[['project', 'impact', 'year']]`,
                   <div className="p-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 mr-3 group-hover:scale-110 transition-transform duration-300">
                     <Brain className="w-6 h-6 text-white" />
                   </div>
-                  AI & Machine Learning
+                  {t.aiFrameworks}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {["TensorFlow", "PyTorch", "Scikit-learn", "Deep Learning"].map((skill) => (
+                  {[...devTools.frameworks, ...aiSkills.machineLearning].slice(0, 5).map((skill) => (
                     <Badge
                       key={skill}
                       className={`transition-all duration-300 ${
@@ -682,6 +784,8 @@ projects_df[['project', 'impact', 'year']]`,
                 </div>
               </CardContent>
             </Card>
+
+            {/* Data Engineering Card */}
             <Card
               className={`${themeClasses.card} transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group`}
             >
@@ -690,26 +794,28 @@ projects_df[['project', 'impact', 'year']]`,
                   <div className="p-2 rounded-lg bg-gradient-to-r from-amber-600 to-orange-600 mr-3 group-hover:scale-110 transition-transform duration-300">
                     <BarChart3 className="w-6 h-6 text-white" />
                   </div>
-                  Data Engineering
+                  {t.dataEngineering}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {["Pandas", "Apache Spark", "Kafka", "Airflow"].map((skill) => (
+                  {aiSkills.dataEngineering.map((tool) => (
                     <Badge
-                      key={skill}
+                      key={tool}
                       className={`transition-all duration-300 ${
                         isDark
                           ? "bg-amber-500/20 text-amber-300 border-amber-500/30 hover:bg-amber-500/30"
                           : "bg-amber-100 text-amber-700 border-amber-300 hover:bg-amber-200"
                       }`}
                     >
-                      {skill}
+                      {tool}
                     </Badge>
                   ))}
                 </div>
               </CardContent>
             </Card>
+
+            {/* Infrastructure Card */}
             <Card
               className={`${themeClasses.card} transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group`}
             >
@@ -718,47 +824,18 @@ projects_df[['project', 'impact', 'year']]`,
                   <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 mr-3 group-hover:scale-110 transition-transform duration-300">
                     <Database className="w-6 h-6 text-white" />
                   </div>
-                  Infrastructure
+                  {t.infrastructure}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {["AWS", "Docker", "Kubernetes", "MLflow"].map((skill) => (
-                    <Badge
-                      key={skill}
-                      className={`transition-all duration-300 ${
-                        isDark
-                          ? "bg-purple-500/20 text-purple-300 border-purple-500/30 hover:bg-purple-500/30"
-                          : "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200"
-                      }`}
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            {/* New Dev Tools Card */}
-            <Card
-              className={`${themeClasses.card} transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group`}
-            >
-              <CardHeader>
-                <CardTitle className={`${themeClasses.text} flex items-center transition-colors duration-300`}>
-                  <div className="p-2 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 mr-3 group-hover:scale-110 transition-transform duration-300">
-                    <Code className="w-6 h-6 text-white" />
-                  </div>
-                  Dev Tools
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {["Git", "VS Code", "Jupyter", "Docker Compose", "DVC"].map((tool) => (
+                  {devTools.infrastructure.map((tool) => (
                     <Badge
                       key={tool}
                       className={`transition-all duration-300 ${
                         isDark
-                          ? "bg-green-500/20 text-green-300 border-green-500/30 hover:bg-green-500/30"
-                          : "bg-green-100 text-green-700 border-green-300 hover:bg-green-200"
+                          ? "bg-purple-500/20 text-purple-300 border-purple-500/30 hover:bg-purple-500/30"
+                          : "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-200"
                       }`}
                     >
                       {tool}
@@ -771,11 +848,11 @@ projects_df[['project', 'impact', 'year']]`,
         </div>
       </section>
 
-      {/* Certificates & Achievements Section */}
+      {/* Certificates Section */}
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <h2 className={`text-4xl font-bold text-center mb-12 ${themeClasses.text} transition-colors duration-300`}>
-            Certificates & Achievements
+            {t.certificatesTitle}
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {[
@@ -807,6 +884,22 @@ projects_df[['project', 'impact', 'year']]`,
                 institution: "IBM",
               },
               {
+                year: "2025",
+                title: "Machine Learning with Python",
+                description: "Comprehensive machine learning certification covering algorithms, model building, and Python implementation.",
+                color: "blue",
+                logo: "https://yt3.googleusercontent.com/dhVlUr4qzdw97K77mitoVSZk8u3KLl4hWCeiAVNuoqG1W7WmcN86GSIl96Ge1PeauemTwCl5TA=s900-c-k-c0x00ffffff-no-rj",
+                institution: "IBM",
+              },
+              {
+                year: "2024",
+                title: "Building Scalable Java Microservices with Spring Boot and Spring Cloud",
+                description: "Advanced course on building enterprise-grade microservices architecture using Spring ecosystem.",
+                color: "green",
+                logo: "https://yt3.googleusercontent.com/ytc/AIdro_n94STjDykDksYxhfE4RhM1BT4R2H69tIAHav8jrey03qQ=s900-c-k-c0x00ffffff-no-rj",
+                institution: "Google Cloud",
+              },
+              {
                 year: "2023",
                 title: "Specialisation Python for Everybody",
                 description: "Comprehensive Python programming specialization covering fundamentals to advanced concepts.",
@@ -833,9 +926,9 @@ projects_df[['project', 'impact', 'year']]`,
                             ? "from-blue-600 to-cyan-600"
                             : cert.color === "amber"
                               ? "from-amber-600 to-orange-600"
-                              : cert.color === "purple"
-                                ? "from-purple-600 to-pink-600"
-                                : "from-green-600 to-emerald-600"
+                              : cert.color === "green"
+                                ? "from-green-600 to-emerald-600"
+                                : "from-purple-600 to-pink-600"
                         } group-hover:scale-110 transition-transform duration-300`}
                       >
                         {cert.year}
@@ -865,20 +958,19 @@ projects_df[['project', 'impact', 'year']]`,
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className={`text-4xl font-bold mb-4 ${themeClasses.text} transition-colors duration-300`}>
-              Interactive Data Profile
+              {t.notebookTitle}
             </h2>
             <p className={`${themeClasses.textSecondary} mb-6 transition-colors duration-300`}>
-              Explore my professional information through an interactive Jupyter-style notebook
+              {t.notebookSubtitle}
             </p>
             <Button
               onClick={executeAllCells}
               className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg transition-all duration-300"
             >
               <Play className="w-4 h-4 mr-2" />
-              Run All Cells
+              {t.runAllCells}
             </Button>
           </div>
-
           <Card className={`bg-gray-900/90 border-gray-700 shadow-2xl transition-all duration-300`}>
             <CardHeader className="bg-gray-800 border-b border-gray-700">
               <CardTitle className="text-white font-mono text-sm flex items-center">
@@ -933,7 +1025,7 @@ projects_df[['project', 'impact', 'year']]`,
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <h2 className={`text-4xl font-bold text-center mb-12 ${themeClasses.text} transition-colors duration-300`}>
-            Featured Projects
+            {t.projectsTitle}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {personalData.projects.map((project, index) => (
@@ -964,7 +1056,7 @@ projects_df[['project', 'impact', 'year']]`,
                         : "text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                     }`}
                   >
-                    View Details <ChevronRight className="w-4 h-4 ml-1" />
+                    {t.viewDetails} <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                 </CardContent>
               </Card>
@@ -977,10 +1069,10 @@ projects_df[['project', 'impact', 'year']]`,
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className={`text-4xl font-bold mb-8 ${themeClasses.text} transition-colors duration-300`}>
-            Let's Build Something Amazing
+            {t.contactTitle}
           </h2>
           <p className={`${themeClasses.textSecondary} mb-8 transition-colors duration-300`}>
-            Ready to discuss your next ML project or explore collaboration opportunities?
+            {t.contactSubtitle}
           </p>
           <a
             href="mailto:fninejasser@hotmail.com"
@@ -993,7 +1085,7 @@ projects_df[['project', 'impact', 'year']]`,
               className={`${themeClasses.button} text-white shadow-lg transition-all duration-300 hover:scale-105`}
             >
               <Mail className="w-5 h-5 mr-2" />
-              Get In Touch
+              {t.getInTouch}
             </Button>
           </a>
         </div>
